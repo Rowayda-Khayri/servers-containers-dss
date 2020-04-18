@@ -1,2 +1,6 @@
-## YAML Template.
 ---
+- hosts: localhost
+  roles:
+    - create-droplet
+  
+    
