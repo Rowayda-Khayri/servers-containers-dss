@@ -3,10 +3,10 @@
   local_action:
     module: digital_ocean_sshkey
     oauth_token: "{{ digitalocean-api-token }}"
-    name: brain_ssh_key
+    name: brain_root_ssh_key
     ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
     state: present
-  register: brain_ssh_key
+  register: brain_root_ssh_key
   
 - name: Create droplet
   local_action:
@@ -17,7 +17,7 @@
     size: s-1vcpu-1gb
     region: sfo2
     image: lamp-18-04
-    ssh_keys: "{{ brain-ssh-key-fingerprint }}"
+    ssh_keys: "{{ brain-root-ssh-key-fingerprint }}"
     monitoring: true
   register: droplet
       
