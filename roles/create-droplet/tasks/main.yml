@@ -1,2 +1,9 @@
-## YAML Template.
 ---
+- name: Ensure key exists on DigitalOcean
+  local_action:
+    module: digital_ocean_sshkey
+    oauth_token: "{{ digitalocean-api-token }}"
+    name: brain_ssh_key
+    ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    state: present
+  register: brain_ssh_key
