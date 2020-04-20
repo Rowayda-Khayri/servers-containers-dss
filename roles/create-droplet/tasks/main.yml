@@ -1,5 +1,5 @@
 ---
-- name: Ensure key exists on DigitalOcean
+- name: Ensure SSH key of control node (brain) exists on DigitalOcean account
   local_action:
     module: digital_ocean_sshkey
     oauth_token: "{{ digitalocean-api-token }}"
@@ -7,3 +7,17 @@
     ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
     state: present
   register: brain_ssh_key
+  
+- name: Create droplet
+  local_action:
+    module: digital_ocean_droplet
+    oauth_token: "{{ digitalocean-api-token }}"
+    name: "{{ lookup('pipe','date +%Y-%m-%d-%H-%M-%S') }}"
+    state: present
+    size: s-1vcpu-1gb
+    region: sfo2
+    image: lamp-18-04
+    ssh_keys: "{{ brain-ssh-key-fingerprint }}"
+    monitoring: true
+  register: droplet
+      
