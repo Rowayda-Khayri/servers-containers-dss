@@ -1,5 +1,5 @@
 ---
-- name: Ensure SSH key of control node (brain) exists on DigitalOcean account
+- name: Adds SSH key of control node (brain) to DigitalOcean account
   local_action:
     module: digital_ocean_sshkey
     oauth_token: "{{ digitalocean-api-token }}"
@@ -20,4 +20,10 @@
     ssh_keys: "{{ brain-root-ssh-key-fingerprint }}"
     monitoring: true
   register: droplet
-      
+  
+- name: Add droplet IP to inventory file
+  local_action:
+    module: lineinfile
+    path: /var/www/html/servers-containers-dss/hosts
+    line: 134.204.95.98
+    state: present
