@@ -25,5 +25,5 @@
   local_action:
     module: lineinfile
     path: /var/www/html/servers-containers-dss/hosts
-    line: 134.204.95.98
+    line: 134.204.95.98 containers=0
     state: present
